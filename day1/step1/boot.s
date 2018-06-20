@@ -18,6 +18,13 @@
 .ascii "FAT12   "           // フォーマットの名前(8バイト)                               
 .org . + 18                 // とりあえず18バイトあけておく                              
 
+
+/* https://sourceware.org/binutils/docs/as/i386_002dVariations.html#i386_002dVariations
+---
+In AT&T syntax the size of memory operands is determined from the last character of the instruction mnemonic. Mnemonic suffixes of ‘b’, ‘w’, ‘l’ and ‘q’ specify byte (8-bit), word (16-bit), long (32-bit) and quadruple word (64-bit) memory references. Intel syntax accomplishes this by prefixing memory operands (not the instruction mnemonics) with ‘byte ptr’, ‘word ptr’, ‘dword ptr’ and ‘qword ptr’. Thus, Intel ‘mov al, byte ptr foo’ is ‘movb foo, %al’ in AT&T syntax.
+---
+*/
+
 // プログラム本体
 
 .byte 0xb8, 0x00, 0x00, 0x8e, 0xd0, 0xbc, 0x00, 0x7c

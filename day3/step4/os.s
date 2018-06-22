@@ -1,6 +1,11 @@
 .code16
+
 movw $mag_start, %si
 call putstr
+
+//mov $0x13, %al              // VGAグラフィックス、320x200x8bitカラー
+//mov $0x00, %ah
+//int $0x10
 
 fin:
 hlt                         // 何かあるまでCPUを停止させる
@@ -30,4 +35,3 @@ ret
 
 // メッセージ部分
 mag_start: .ascii "OS Start\r\n\0"
-

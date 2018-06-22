@@ -1,8 +1,9 @@
-CFLAGS=-c -m32 
-LDFLAGS=--verbose
 CC=i386-elf-gcc
 LD=i386-elf-ld
 RUN=qemu-system-i386
+CFLAGS=-c -m32 
+LDFLAGS=--verbose
+LDFLAGS=-nostdlib -nostdinc
 RFLAGS=-nographic
 #RFLAGS=-localtime -vga std -fda $<
 

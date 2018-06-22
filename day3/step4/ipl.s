@@ -55,7 +55,7 @@ jnc next
 
 addw $1, %si
 cmpw $5, %si
-jae failed
+jae read_failed
 
 movb $0x00, %ah
 movb $0x00, %dl             // ドライブ番号 DL=0x00 : Aドライブ
@@ -89,7 +89,7 @@ movw $msg_succeeded, %si
 call putstr
 jmp fin
 
-failed:
+read_failed:
 movw $msg_failed, %si
 call putstr
 jmp fin
@@ -116,6 +116,8 @@ popw %ax
 popw %si
 ret
 
+movw $CYLS, (0x0ff0)
+
 fin:
 jmp 0xc200
 
@@ -124,19 +126,13 @@ msg_hello: .ascii "hello, world\r\n\0"
 msg_readloop: .ascii "R\r\n\0"
 msg_succeeded: .ascii "READ SUCCEEDED\r\n\0"
 msg_failed: .ascii "FAILED\r\n\0"
-
 .equ CYLS, 10
 
 .org 510
 .byte 0x55, 0xaa
 
 // 以下はブートセクタ以外の部分の記述
-//.byte 0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-//.org 512 * 10
-//.byte 0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-//.org 1440 * 1024
-
 .byte 0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-.skip 4600, 0x00
+.org 512 * 10
 .byte 0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-.skip 1469432, 0x00
+.org 1440 * 1024
